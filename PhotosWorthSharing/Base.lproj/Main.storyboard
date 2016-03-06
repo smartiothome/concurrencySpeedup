@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zUY-jq-tM0">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Classic Photos-->
+        <scene sceneID="vMk-oo-hky">
+            <objects>
+                <tableViewController title="Classic Photos" id="fop-P6-ozg" customClass="PhotoTableTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="r4w-g7-UXD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoDisplay" id="Qof-d8-EOn">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qof-d8-EOn" id="ygQ-WI-WDd">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="pTk-3E-qFO" kind="show" id="QEa-8y-qtF"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fop-P6-ozg" id="ec1-e0-VUB"/>
+                            <outlet property="delegate" destination="fop-P6-ozg" id="zrP-E0-f0K"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Fp1-q1-BZX"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lro-o1-Wam" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1875" y="359"/>
+        </scene>
+        <!--Image Detail View Controller-->
+        <scene sceneID="Q3Q-XN-4C6">
+            <objects>
+                <viewController id="pTk-3E-qFO" customClass="ImageDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uRG-ub-697"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nn6-jm-Q2g"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TMh-gD-Avy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qt8-hy-nqd">
+                                <rect key="frame" x="95" y="139" width="475" height="313"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Qt8-hy-nqd" firstAttribute="centerX" secondItem="TMh-gD-Avy" secondAttribute="centerX" id="bvz-it-k0w"/>
+                            <constraint firstItem="Qt8-hy-nqd" firstAttribute="centerY" secondItem="TMh-gD-Avy" secondAttribute="centerY" id="i9G-hm-1sW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageDisplay" destination="Qt8-hy-nqd" id="KPP-mf-XUi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NBU-PI-Gt5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2573" y="359"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rAW-1w-xFX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zUY-jq-tM0" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Jf-TD-rAm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fop-P6-ozg" kind="relationship" relationship="rootViewController" id="htt-2s-4nO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JOt-F9-0QJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="904" y="255"/>
+        </scene>
+    </scenes>
+</document>

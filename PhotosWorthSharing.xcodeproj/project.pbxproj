@@ -1,0 +1,339 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C3791FFF1C8BDA1900D84E9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C3791FFE1C8BDA1900D84E9A /* main.m */; };
+		C37920021C8BDA1900D84E9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C37920011C8BDA1900D84E9A /* AppDelegate.m */; };
+		C37920081C8BDA1900D84E9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C37920061C8BDA1900D84E9A /* Main.storyboard */; };
+		C379200B1C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C37920091C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodeld */; };
+		C379200D1C8BDA1900D84E9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C379200C1C8BDA1900D84E9A /* Assets.xcassets */; };
+		C37920101C8BDA1900D84E9A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C379200E1C8BDA1900D84E9A /* LaunchScreen.storyboard */; };
+		C379201C1C8BDE4D00D84E9A /* PhotoTableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */; };
+		C379201F1C8C97C800D84E9A /* ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C379201E1C8C97C800D84E9A /* ImageDetailViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C3791FFA1C8BDA1900D84E9A /* PhotosWorthSharing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotosWorthSharing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3791FFE1C8BDA1900D84E9A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C37920001C8BDA1900D84E9A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C37920011C8BDA1900D84E9A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C37920071C8BDA1900D84E9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C379200A1C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotosWorthSharing.xcdatamodel; sourceTree = "<group>"; };
+		C379200C1C8BDA1900D84E9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C379200F1C8BDA1900D84E9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C37920111C8BDA1900D84E9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C379201A1C8BDE4D00D84E9A /* PhotoTableTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoTableTableViewController.h; sourceTree = "<group>"; };
+		C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTableTableViewController.m; sourceTree = "<group>"; };
+		C379201D1C8C97C800D84E9A /* ImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDetailViewController.h; sourceTree = "<group>"; };
+		C379201E1C8C97C800D84E9A /* ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C3791FF71C8BDA1900D84E9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C3791FF11C8BDA1900D84E9A = {
+			isa = PBXGroup;
+			children = (
+				C3791FFC1C8BDA1900D84E9A /* PhotosWorthSharing */,
+				C3791FFB1C8BDA1900D84E9A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C3791FFB1C8BDA1900D84E9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3791FFA1C8BDA1900D84E9A /* PhotosWorthSharing.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3791FFC1C8BDA1900D84E9A /* PhotosWorthSharing */ = {
+			isa = PBXGroup;
+			children = (
+				C379201A1C8BDE4D00D84E9A /* PhotoTableTableViewController.h */,
+				C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */,
+				C37920001C8BDA1900D84E9A /* AppDelegate.h */,
+				C37920011C8BDA1900D84E9A /* AppDelegate.m */,
+				C37920061C8BDA1900D84E9A /* Main.storyboard */,
+				C379201D1C8C97C800D84E9A /* ImageDetailViewController.h */,
+				C379201E1C8C97C800D84E9A /* ImageDetailViewController.m */,
+				C379200C1C8BDA1900D84E9A /* Assets.xcassets */,
+				C379200E1C8BDA1900D84E9A /* LaunchScreen.storyboard */,
+				C37920111C8BDA1900D84E9A /* Info.plist */,
+				C37920091C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodeld */,
+				C3791FFD1C8BDA1900D84E9A /* Supporting Files */,
+			);
+			path = PhotosWorthSharing;
+			sourceTree = "<group>";
+		};
+		C3791FFD1C8BDA1900D84E9A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C3791FFE1C8BDA1900D84E9A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C3791FF91C8BDA1900D84E9A /* PhotosWorthSharing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C37920141C8BDA1900D84E9A /* Build configuration list for PBXNativeTarget "PhotosWorthSharing" */;
+			buildPhases = (
+				C3791FF61C8BDA1900D84E9A /* Sources */,
+				C3791FF71C8BDA1900D84E9A /* Frameworks */,
+				C3791FF81C8BDA1900D84E9A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PhotosWorthSharing;
+			productName = PhotosWorthSharing;
+			productReference = C3791FFA1C8BDA1900D84E9A /* PhotosWorthSharing.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C3791FF21C8BDA1900D84E9A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Smart Home";
+				TargetAttributes = {
+					C3791FF91C8BDA1900D84E9A = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = NPL2B7S73Y;
+					};
+				};
+			};
+			buildConfigurationList = C3791FF51C8BDA1900D84E9A /* Build configuration list for PBXProject "PhotosWorthSharing" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C3791FF11C8BDA1900D84E9A;
+			productRefGroup = C3791FFB1C8BDA1900D84E9A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C3791FF91C8BDA1900D84E9A /* PhotosWorthSharing */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C3791FF81C8BDA1900D84E9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C37920101C8BDA1900D84E9A /* LaunchScreen.storyboard in Resources */,
+				C379200D1C8BDA1900D84E9A /* Assets.xcassets in Resources */,
+				C37920081C8BDA1900D84E9A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C3791FF61C8BDA1900D84E9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C379200B1C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodeld in Sources */,
+				C379201F1C8C97C800D84E9A /* ImageDetailViewController.m in Sources */,
+				C37920021C8BDA1900D84E9A /* AppDelegate.m in Sources */,
+				C3791FFF1C8BDA1900D84E9A /* main.m in Sources */,
+				C379201C1C8BDE4D00D84E9A /* PhotoTableTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C37920061C8BDA1900D84E9A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C37920071C8BDA1900D84E9A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C379200E1C8BDA1900D84E9A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C379200F1C8BDA1900D84E9A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C37920121C8BDA1900D84E9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C37920131C8BDA1900D84E9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C37920151C8BDA1900D84E9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = PhotosWorthSharing/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.apm.smartiothome.PhotosWorthSharing;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		C37920161C8BDA1900D84E9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = PhotosWorthSharing/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.apm.smartiothome.PhotosWorthSharing;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C3791FF51C8BDA1900D84E9A /* Build configuration list for PBXProject "PhotosWorthSharing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C37920121C8BDA1900D84E9A /* Debug */,
+				C37920131C8BDA1900D84E9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C37920141C8BDA1900D84E9A /* Build configuration list for PBXNativeTarget "PhotosWorthSharing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C37920151C8BDA1900D84E9A /* Debug */,
+				C37920161C8BDA1900D84E9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C37920091C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C379200A1C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodel */,
+			);
+			currentVersion = C379200A1C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodel */;
+			path = PhotosWorthSharing.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = C3791FF21C8BDA1900D84E9A /* Project object */;
+}
