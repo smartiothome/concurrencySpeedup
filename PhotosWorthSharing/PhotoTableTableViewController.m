@@ -8,6 +8,7 @@
 
 #import "PhotoTableTableViewController.h"
 #import "ImageDetailViewController.h"
+#import "PhotoRecord.h"
 
 @interface PhotoTableTableViewController ()
 
@@ -33,16 +34,17 @@
         if(error)
         {
             NSLog(@"Could not retrieve list of photo URLs due to error %@",error) ;
-            [self.photos addObject:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Failed to load Objects",@"Name",@"-1",@"URL",nil]] ;
-            //[self.photos setObject:[[NSDictionary alloc] initWithObjectsAndKeys:@"-1",@"URL",nil] forKey:@"Failed to Load Photos"] ;
+            PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
+            photoObjToAdd.photoTitle=@"Failed to Load Photo, plist retrieve error" ;
+            photoObjToAdd.currState=Failed ;
+            [self.photos addObject:photoObjToAdd] ;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData] ;
             }) ;
         }
         else
         {
-        //Convert received plist into list of objects to download
-            //NSError *error ;
+            //Convert received plist into list of objects to download
             NSDictionary *datasourceDictionary = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable format:nil error:&error] ;
             if(!error)
             {
@@ -51,7 +53,12 @@
                 for(key in datasourceDictionary)
                 {
                     NSString *value = [datasourceDictionary objectForKey:key];
-                    [self.photos addObject:[[NSMutableDictionary alloc] initWithObjectsAndKeys:key,@"Name",value,@"URL",nil]] ;
+                    PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
+                    photoObjToAdd.photoTitle=key ;
+                    photoObjToAdd.photoURL=value ;
+                    photoObjToAdd.currState=New;
+                    [self.photos addObject:photoObjToAdd] ;
+                    
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData] ;
@@ -60,11 +67,14 @@
             else
             {
                 NSLog(@"Did not receive valid plist.  PList decoding resulted in error %@",error) ;
-                [self.photos addObject:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Failed to load Objects",@"Name",@"-1",@"URL",nil]] ;
-                //[self.photos setObject:[[NSDictionary alloc] initWithObjectsAndKeys:@"-1",@"URL",nil] forKey:@"Failed to Load Photos"] ;
+                PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
+                photoObjToAdd.photoTitle=@"Failed to Load Photo, URL plist decode error" ;
+                photoObjToAdd.currState=Failed ;
+                [self.photos addObject:photoObjToAdd] ;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData] ;
                 }) ;
+
             }
          //NSLog(@"received data %@",data) ;
             
@@ -108,47 +118,58 @@
     
     
     // Configure the cell...
-    NSDictionary *rowDict=[NSDictionary dictionaryWithDictionary:self.photos[indexPath.row]] ;
-    if(![rowDict[@"URL"] isEqualToString:@"-1"])
+    PhotoRecord *photoDetails=self.photos[indexPath.row] ;
+    NSLog(@"Photo details are %@",photoDetails) ;
+    if(photoDetails.currState!=Failed)
     {
+        NSAssert(photoDetails.currState==Downloading || photoDetails.currState==Filtered || photoDetails.currState==New, @"State is %d not failed, downloading,new or filtered.",photoDetails.currState) ;
         //Download image
-        NSURL *imageURL = [NSURL URLWithString:rowDict[@"URL"]] ;
-        if(!rowDict[@"Image"] && !rowDict[@"isDownloading"])
+        NSURL *imageURL = [NSURL URLWithString:photoDetails.photoURL] ;
+        if(photoDetails.currState==Filtered)
         {
-            NSLog(@"Starting image download for URl %@ for row %ld",imageURL,(long)indexPath.row) ;
-            self.photos[indexPath.row][@"isDownloading"]=@(YES) ;
+            cell.imageView.image=photoDetails.imageData ;
+            NSLog(@"Have already downlaoded and filtered image for URL %@/row %ld. Just supllying it.",imageURL,(long)indexPath.row) ;
+        }
+        else if(photoDetails.currState==Downloading)
+        {
+            //No op, since we just wait for download to complete
+            NSLog(@"Have staretd downloading image for URL %@/row %ld. Nothing to supply at this point and nothing to start.",imageURL,(long)indexPath.row) ;
+        }
+        else if(photoDetails.currState==New)
+        {
+            NSLog(@"Starting image download for URL %@/row %ld",imageURL,(long)indexPath.row) ;
+            photoDetails.currState=Downloading ;
+            self.photos[indexPath.row]=photoDetails ;
             NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                 if(error)
                 {
                     NSLog(@"Could not retrieve image at row %ld due to error %@",(long)indexPath.row,error) ;
-                    self.photos[indexPath.row][@"Name"] =@"Failed to load Objects" ;
-                    self.photos[indexPath.row][@"URL"] =@"-1" ;
+                    PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
+                    photoObjToAdd.photoTitle=@"Failed to Load Photo, Downlaod error" ;
+                    photoObjToAdd.currState=Failed ;
+                    self.photos[indexPath.row]=photoObjToAdd;
                 }
                 else
                 {
                     //Convert received plist into list of objects to download
                     //NSPropertyListSerialization.propertyListWithData
                     //Create image object from retrieved data and apply sepia filter on it
-                    self.photos[indexPath.row][@"Image"]=[self applySepiaFilter:[UIImage imageWithData:data]] ;
-                    cell.imageView.image=self.photos[indexPath.row][@"Image"] ;
+                    ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:[UIImage imageWithData:data]] ;
+                    cell.imageView.image=((PhotoRecord *)self.photos[indexPath.row]).imageData ;
+                    ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
                 }
                 [self.tableView reloadData] ;
             }] ;
             [dataTask resume] ;
         }
-        else
-        {
-            cell.imageView.image=rowDict[@"Image"] ;
-            NSLog(@"Image for URl %@/row %ld alreday exists or is downloading.",imageURL,(long)indexPath.row) ;
-        }
     }
     else
     {
-        NSLog(@"Not retrieving image at row %ld since URL is -1",(long)indexPath.row) ;
+        NSLog(@"Not retrieving image at row %ld because of failure %@",(long)indexPath.row,photoDetails.photoTitle) ;
         cell.imageView.image=nil ;
     }
     
-    cell.textLabel.text=rowDict[@"Name"] ;
+    cell.textLabel.text=photoDetails.photoTitle ;
     
     CFTimeInterval endTime = CACurrentMediaTime();
     NSLog(@"Total Runtime for cellFOrIdnex: %g ms", (endTime - startTime)/1000.0);
@@ -212,9 +233,10 @@
     // Pass the selected object to the new view controller.
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     ImageDetailViewController *destVC = (ImageDetailViewController *)[segue destinationViewController] ;
-    destVC.imageToDisplay = self.photos[indexPath.row][@"Image"] ;
-    destVC.imageName=self.photos[indexPath.row][@"Name"] ;
-    destVC.url=self.photos[indexPath.row][@"URL"] ;
+    PhotoRecord *photoObjSelected = self.photos[indexPath.row] ;
+    destVC.imageToDisplay = photoObjSelected.imageData ;
+    destVC.imageName=photoObjSelected.photoTitle ;
+    destVC.url=photoObjSelected.photoURL ;
     //NSLog(@"doing a segue from row %ld with image of size = %f,%f and data = %@",(long)indexPath.row,destVC.imageDisplay.image.size.width,destVC.imageDisplay.image.size.height,self.photos[indexPath.row][@"Image"]);
 }
 

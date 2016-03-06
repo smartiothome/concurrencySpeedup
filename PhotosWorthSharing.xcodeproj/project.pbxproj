@@ -15,6 +15,7 @@
 		C37920101C8BDA1900D84E9A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C379200E1C8BDA1900D84E9A /* LaunchScreen.storyboard */; };
 		C379201C1C8BDE4D00D84E9A /* PhotoTableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */; };
 		C379201F1C8C97C800D84E9A /* ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C379201E1C8C97C800D84E9A /* ImageDetailViewController.m */; };
+		C37920221C8CE4C600D84E9A /* PhotoRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = C37920211C8CE4C600D84E9A /* PhotoRecord.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,8 @@
 		C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTableTableViewController.m; sourceTree = "<group>"; };
 		C379201D1C8C97C800D84E9A /* ImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDetailViewController.h; sourceTree = "<group>"; };
 		C379201E1C8C97C800D84E9A /* ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailViewController.m; sourceTree = "<group>"; };
+		C37920201C8CE4C600D84E9A /* PhotoRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoRecord.h; sourceTree = "<group>"; };
+		C37920211C8CE4C600D84E9A /* PhotoRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoRecord.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +68,8 @@
 			children = (
 				C379201A1C8BDE4D00D84E9A /* PhotoTableTableViewController.h */,
 				C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */,
+				C37920201C8CE4C600D84E9A /* PhotoRecord.h */,
+				C37920211C8CE4C600D84E9A /* PhotoRecord.m */,
 				C37920001C8BDA1900D84E9A /* AppDelegate.h */,
 				C37920011C8BDA1900D84E9A /* AppDelegate.m */,
 				C37920061C8BDA1900D84E9A /* Main.storyboard */,
@@ -159,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C379200B1C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodeld in Sources */,
+				C37920221C8CE4C600D84E9A /* PhotoRecord.m in Sources */,
 				C379201F1C8C97C800D84E9A /* ImageDetailViewController.m in Sources */,
 				C37920021C8BDA1900D84E9A /* AppDelegate.m in Sources */,
 				C3791FFF1C8BDA1900D84E9A /* main.m in Sources */,
