@@ -14,6 +14,7 @@
 @interface PhotoTableTableViewController ()
 
 @property dispatch_queue_t serialQ ;
+@property dispatch_queue_t concurrentQ ;
 
 @end
 
@@ -33,6 +34,7 @@
     self.defaultSessionConfig delegate: nil delegateQueue: [NSOperationQueue mainQueue]] ;
     
     self.serialQ = dispatch_queue_create("com.smarthome.imagegrabber.serialbgqueue",DISPATCH_QUEUE_SERIAL) ;
+    self.concurrentQ = dispatch_queue_create("com.smarthome.imagegrabber.concBgQ",DISPATCH_QUEUE_CONCURRENT) ;
     
     
     NSURL *photoPlist = [NSURL URLWithString:@"http://www.raywenderlich.com/downloads/ClassicPhotosDictionary.plist"] ;
@@ -116,66 +118,133 @@
 
     return [self.photos count];
 }
-
+//
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Configure the cell...
+//    PhotoRecord *photoDetails=self.photos[indexPath.row] ;
+//    NSLog(@"Photo details are %@",photoDetails) ;
+//    if(photoDetails.currState!=Failed)
+//    {
+//        NSAssert(photoDetails.currState==Downloaded || photoDetails.currState==Downloading || photoDetails.currState==Filtered || photoDetails.currState==New, @"State is %d not failed, new, downloading, downlaoded or filtered.",photoDetails.currState) ;
+//        //Download image
+//        NSURL *imageURL = [NSURL URLWithString:photoDetails.photoURL] ;
+//        if(photoDetails.currState==Filtered)
+//        {
+//            cell.imageView.image=photoDetails.imageData ;
+//            NSLog(@"Have already downlaoded and filtered image for URL %@/row %ld. Just supllying it.",imageURL,(long)indexPath.row) ;
+//        }
+//        else if(photoDetails.currState==Downloading)
+//        {
+//            //No op, since we just wait for download to complete
+//            NSLog(@"Have staretd downloading image for URL %@/row %ld. Nothing to supply at this point and nothing to start.",imageURL,(long)indexPath.row) ;
+//        }
+//        else if(photoDetails.currState==Downloaded)
+//        {
+//            cell.imageView.image=photoDetails.imageData ;
+//            NSLog(@"Have already downlaoded but not filtered image for URL %@/row %ld. Just supplying pre-filtered version.",imageURL,(long)indexPath.row) ;
+//        }
+//        else if(photoDetails.currState==New)
+//        {
+//            NSLog(@"Starting image download for URL %@/row %ld",imageURL,(long)indexPath.row) ;
+//            photoDetails.currState=Downloading ;
+//            self.photos[indexPath.row]=photoDetails ;
+//            dispatch_async(self.concurrentQ, ^(void) {
+//                NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//                    if(error)
+//                    {
+//                        NSLog(@"Could not retrieve image at row %ld due to error %@",(long)indexPath.row,error) ;
+//                        PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
+//                        photoObjToAdd.photoTitle=@"Failed to Load Photo, Downlaod error" ;
+//                        photoObjToAdd.currState=Failed ;
+//                        self.photos[indexPath.row]=photoObjToAdd;
+//                    }
+//                    else
+//                    {
+//                        //Convert received plist into list of objects to download
+//                        //NSPropertyListSerialization.propertyListWithData
+//                        //Create image object from retrieved data and apply sepia filter on it
+//                        ((PhotoRecord *)self.photos[indexPath.row]).imageData=[UIImage imageWithData:data] ;
+//                        ((PhotoRecord *)self.photos[indexPath.row]).currState=Downloaded ;
+//                        dispatch_async(self.concurrentQ, ^(void) {
+//                            ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
+//                            cell.imageView.image=((PhotoRecord *)self.photos[indexPath.row]).imageData ;
+//                            ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
+//                        }) ;
+//                    }
+//                    [self.tableView reloadData] ;
+//                }] ;
+//                [dataTask resume] ;
+//            }) ;
+//        }
+//    }
+//    else
+//    {
+//        NSLog(@"Not retrieving image at row %ld because of failure %@",(long)indexPath.row,photoDetails.photoTitle) ;
+//        cell.imageView.image=nil ;
+//    }
+//    
+//    cell.textLabel.text=photoDetails.photoTitle ;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CFTimeInterval startTime = CACurrentMediaTime();
+//    CFTimeInterval startTime = CACurrentMediaTime();
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"photoDisplay" forIndexPath:indexPath];
     
     
     // Configure the cell...
     PhotoRecord *photoDetails=self.photos[indexPath.row] ;
-    NSLog(@"Photo details are %@",photoDetails) ;
+    //NSLog(@"Photo details are %@",photoDetails) ;
     if(photoDetails.currState!=Failed)
     {
-        NSAssert(photoDetails.currState==Downloaded || photoDetails.currState==Downloading || photoDetails.currState==Filtered || photoDetails.currState==New, @"State is %d not failed, new, downloading, downlaoded or filtered.",photoDetails.currState) ;
+        //NSAssert(photoDetails.currState==Downloaded || photoDetails.currState==Downloading || photoDetails.currState==Filtered || photoDetails.currState==New, @"State is %d not failed, new, downloading, downlaoded or filtered.",photoDetails.currState) ;
         //Download image
         NSURL *imageURL = [NSURL URLWithString:photoDetails.photoURL] ;
         if(photoDetails.currState==Filtered)
         {
             cell.imageView.image=photoDetails.imageData ;
-            NSLog(@"Have already downlaoded and filtered image for URL %@/row %ld. Just supllying it.",imageURL,(long)indexPath.row) ;
+            //NSLog(@"Have already downlaoded and filtered image for URL %@/row %ld. Just supllying it.",imageURL,(long)indexPath.row) ;
         }
-        else if(photoDetails.currState==Downloading)
-        {
-            //No op, since we just wait for download to complete
-            NSLog(@"Have staretd downloading image for URL %@/row %ld. Nothing to supply at this point and nothing to start.",imageURL,(long)indexPath.row) ;
-        }
+//        else if(photoDetails.currState==Downloading)
+//        {
+//            //No op, since we just wait for download to complete
+//            //NSLog(@"Have staretd downloading image for URL %@/row %ld. Nothing to supply at this point and nothing to start.",imageURL,(long)indexPath.row) ;
+//        }
         else if(photoDetails.currState==Downloaded)
         {
             cell.imageView.image=photoDetails.imageData ;
-            NSLog(@"Have already downlaoded but not filtered image for URL %@/row %ld. Just supplying pre-filtered version.",imageURL,(long)indexPath.row) ;
+            //NSLog(@"Have already downlaoded but not filtered image for URL %@/row %ld. Just supplying pre-filtered version.",imageURL,(long)indexPath.row) ;
         }
         else if(photoDetails.currState==New)
         {
-            NSLog(@"Starting image download for URL %@/row %ld",imageURL,(long)indexPath.row) ;
+            //NSLog(@"Starting image download for URL %@/row %ld",imageURL,(long)indexPath.row) ;
             photoDetails.currState=Downloading ;
             self.photos[indexPath.row]=photoDetails ;
-            dispatch_async(self.serialQ, ^(void) {
+            dispatch_async(self.concurrentQ, ^(void) {
                 NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                if(error)
-                {
-                    NSLog(@"Could not retrieve image at row %ld due to error %@",(long)indexPath.row,error) ;
-                    PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
-                    photoObjToAdd.photoTitle=@"Failed to Load Photo, Downlaod error" ;
-                    photoObjToAdd.currState=Failed ;
-                    self.photos[indexPath.row]=photoObjToAdd;
-                }
-                else
-                {
-                    //Convert received plist into list of objects to download
-                    //NSPropertyListSerialization.propertyListWithData
-                    //Create image object from retrieved data and apply sepia filter on it
-                    ((PhotoRecord *)self.photos[indexPath.row]).imageData=[UIImage imageWithData:data] ;
-                    ((PhotoRecord *)self.photos[indexPath.row]).currState=Downloaded ;
-                    dispatch_async(self.serialQ, ^(void) {
-                        ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
-                        cell.imageView.image=((PhotoRecord *)self.photos[indexPath.row]).imageData ;
-                        ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
-                    }) ;
-                }
-                [self.tableView reloadData] ;
+                    if(error)
+                    {
+                        //NSLog(@"Could not retrieve image at row %ld due to error %@",(long)indexPath.row,error) ;
+                        PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
+                        photoObjToAdd.photoTitle=@"Failed to Load Photo, Downlaod error" ;
+                        photoObjToAdd.currState=Failed ;
+                        self.photos[indexPath.row]=photoObjToAdd;
+                    }
+                    else
+                    {
+                        //Convert received plist into list of objects to download
+                        //NSPropertyListSerialization.propertyListWithData
+                        //Create image object from retrieved data and apply sepia filter on it
+                        ((PhotoRecord *)self.photos[indexPath.row]).imageData=[UIImage imageWithData:data] ;
+                        ((PhotoRecord *)self.photos[indexPath.row]).currState=Downloaded ;
+                        dispatch_async(self.concurrentQ, ^(void) {
+                            ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
+                            cell.imageView.image=((PhotoRecord *)self.photos[indexPath.row]).imageData ;
+                            ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
+                        }) ;
+                    }
+                    [self.tableView reloadData] ;
             }] ;
             [dataTask resume] ;
             }) ;
@@ -183,14 +252,14 @@
     }
     else
     {
-        NSLog(@"Not retrieving image at row %ld because of failure %@",(long)indexPath.row,photoDetails.photoTitle) ;
+        //NSLog(@"Not retrieving image at row %ld because of failure %@",(long)indexPath.row,photoDetails.photoTitle) ;
         cell.imageView.image=nil ;
     }
     
     cell.textLabel.text=photoDetails.photoTitle ;
     
-    CFTimeInterval endTime = CACurrentMediaTime();
-    NSLog(@"Total Runtime for cellFOrIdnex: %g ms", (endTime - startTime)/1000.0);
+//    CFTimeInterval endTime = CACurrentMediaTime();
+//    NSLog(@"Total Runtime for cellFOrIdnex: %g ms", (endTime - startTime)/1000.0);
     
     return cell;
 }
