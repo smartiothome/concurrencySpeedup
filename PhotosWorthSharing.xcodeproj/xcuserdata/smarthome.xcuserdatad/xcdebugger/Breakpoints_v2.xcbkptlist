@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "478999942.881653"
+            timestampString = "479011890.364992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "-applySepiaFilter:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "479000425.725202"
+            timestampString = "479011890.364992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "479000425.725202"
+            timestampString = "479011890.364992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "5">
          </BreakpointContent>
@@ -65,70 +65,6 @@
             endingLineNumber = "12"
             landmarkName = "@interface ImageDetailViewController"
             landmarkType = "2">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "478999935.062464"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "478999968.374368"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PhotoTableTableViewController tableView:cellForRowAtIndexPath:]"
-                  moduleName = "PhotosWorthSharing"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smarthome/iOSProjects/PhotosWorthSharing/PhotosWorthSharing/PhotoTableTableViewController.m"
-                  timestampString = "478999968.379381"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "125"
-                  endingLineNumber = "125"
-                  offsetFromSymbolStart = "324">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PhotoTableTableViewController tableView:cellForRowAtIndexPath:]"
-                  moduleName = "PhotosWorthSharing"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smarthome/iOSProjects/PhotosWorthSharing/PhotosWorthSharing/PhotoTableTableViewController.m"
-                  timestampString = "478999968.379593"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "125"
-                  endingLineNumber = "125"
-                  offsetFromSymbolStart = "410">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

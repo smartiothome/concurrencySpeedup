@@ -9,8 +9,11 @@
 #import "PhotoTableTableViewController.h"
 #import "ImageDetailViewController.h"
 #import "PhotoRecord.h"
+#import <dispatch/dispatch.h>
 
 @interface PhotoTableTableViewController ()
+
+@property dispatch_queue_t serialQ ;
 
 @end
 
@@ -28,6 +31,10 @@
     self.defaultSessionConfig = 	[NSURLSessionConfiguration defaultSessionConfiguration];
     self.defaultSession = [NSURLSession sessionWithConfiguration:
     self.defaultSessionConfig delegate: nil delegateQueue: [NSOperationQueue mainQueue]] ;
+    
+    self.serialQ = dispatch_queue_create("com.smarthome.imagegrabber.serialbgqueue",DISPATCH_QUEUE_SERIAL) ;
+    
+    
     NSURL *photoPlist = [NSURL URLWithString:@"http://www.raywenderlich.com/downloads/ClassicPhotosDictionary.plist"] ;
     NSLog(@"loading from URL %@",photoPlist) ;
     NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:photoPlist completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -122,7 +129,7 @@
     NSLog(@"Photo details are %@",photoDetails) ;
     if(photoDetails.currState!=Failed)
     {
-        NSAssert(photoDetails.currState==Downloading || photoDetails.currState==Filtered || photoDetails.currState==New, @"State is %d not failed, downloading,new or filtered.",photoDetails.currState) ;
+        NSAssert(photoDetails.currState==Downloaded || photoDetails.currState==Downloading || photoDetails.currState==Filtered || photoDetails.currState==New, @"State is %d not failed, new, downloading, downlaoded or filtered.",photoDetails.currState) ;
         //Download image
         NSURL *imageURL = [NSURL URLWithString:photoDetails.photoURL] ;
         if(photoDetails.currState==Filtered)
@@ -135,12 +142,18 @@
             //No op, since we just wait for download to complete
             NSLog(@"Have staretd downloading image for URL %@/row %ld. Nothing to supply at this point and nothing to start.",imageURL,(long)indexPath.row) ;
         }
+        else if(photoDetails.currState==Downloaded)
+        {
+            cell.imageView.image=photoDetails.imageData ;
+            NSLog(@"Have already downlaoded but not filtered image for URL %@/row %ld. Just supplying pre-filtered version.",imageURL,(long)indexPath.row) ;
+        }
         else if(photoDetails.currState==New)
         {
             NSLog(@"Starting image download for URL %@/row %ld",imageURL,(long)indexPath.row) ;
             photoDetails.currState=Downloading ;
             self.photos[indexPath.row]=photoDetails ;
-            NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            dispatch_async(self.serialQ, ^(void) {
+                NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                 if(error)
                 {
                     NSLog(@"Could not retrieve image at row %ld due to error %@",(long)indexPath.row,error) ;
@@ -154,13 +167,18 @@
                     //Convert received plist into list of objects to download
                     //NSPropertyListSerialization.propertyListWithData
                     //Create image object from retrieved data and apply sepia filter on it
-                    ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:[UIImage imageWithData:data]] ;
-                    cell.imageView.image=((PhotoRecord *)self.photos[indexPath.row]).imageData ;
-                    ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
+                    ((PhotoRecord *)self.photos[indexPath.row]).imageData=[UIImage imageWithData:data] ;
+                    ((PhotoRecord *)self.photos[indexPath.row]).currState=Downloaded ;
+                    dispatch_async(self.serialQ, ^(void) {
+                        ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
+                        cell.imageView.image=((PhotoRecord *)self.photos[indexPath.row]).imageData ;
+                        ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
+                    }) ;
                 }
                 [self.tableView reloadData] ;
             }] ;
             [dataTask resume] ;
+            }) ;
         }
     }
     else
