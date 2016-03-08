@@ -9,12 +9,10 @@
 #import "PhotoTableTableViewController.h"
 #import "ImageDetailViewController.h"
 #import "PhotoRecord.h"
-#import <dispatch/dispatch.h>
+
 
 @interface PhotoTableTableViewController ()
 
-@property dispatch_queue_t serialQ ;
-@property dispatch_queue_t concurrentQ ;
 
 @end
 
@@ -32,9 +30,6 @@
     self.defaultSessionConfig = 	[NSURLSessionConfiguration defaultSessionConfiguration];
     self.defaultSession = [NSURLSession sessionWithConfiguration:
     self.defaultSessionConfig delegate: nil delegateQueue: [NSOperationQueue mainQueue]] ;
-    
-    self.serialQ = dispatch_queue_create("com.smarthome.imagegrabber.serialbgqueue",DISPATCH_QUEUE_SERIAL) ;
-    self.concurrentQ = dispatch_queue_create("com.smarthome.imagegrabber.concBgQ",DISPATCH_QUEUE_CONCURRENT) ;
     
     
     NSURL *photoPlist = [NSURL URLWithString:@"http://www.raywenderlich.com/downloads/ClassicPhotosDictionary.plist"] ;
@@ -151,7 +146,7 @@
             //NSLog(@"Starting image download for URL %@/row %ld",imageURL,(long)indexPath.row) ;
             photoDetails.currState=Downloading ;
             self.photos[indexPath.row]=photoDetails ;
-            dispatch_async(self.concurrentQ, ^(void) {
+            
                 NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                     if(error)
                     {
@@ -172,21 +167,19 @@
                         ((PhotoRecord *)self.photos[indexPath.row]).currState=Downloaded ;
                         
                         //Start filtering process in background
-                        dispatch_async(self.concurrentQ, ^(void) {
+                        
                             ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
                             ((PhotoRecord *)self.photos[indexPath.row]).photoThumbnail=[self returnThumbnail:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
                             ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
                             }) ;
-                        }) ;
                     }
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     }) ;
                 }] ;
                 [dataTask resume] ;
-            }) ;
         }
     }
     else
