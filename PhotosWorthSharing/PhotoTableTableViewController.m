@@ -11,6 +11,8 @@
 #import "PhotoRecord.h"
 #import <dispatch/dispatch.h>
 
+#define InducedDelay 1
+
 @interface PhotoTableTableViewController ()
 
 @property dispatch_queue_t serialQ ;
@@ -218,6 +220,7 @@
 
 - (UIImage *) applySepiaFilter:(UIImage*)image
 {
+    sleep(InducedDelay) ;
     //let inputImage = CIImage(data:UIImagePNGRepresentation(image)!)
     CIImage *inputImage = [CIImage imageWithData:UIImagePNGRepresentation(image)] ;
     //let context = CIContext(options:nil)
