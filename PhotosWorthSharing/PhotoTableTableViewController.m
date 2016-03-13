@@ -122,10 +122,8 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"photoDisplay" forIndexPath:indexPath];
-    
     // Configure the cell...
     PhotoRecord *photoDetails=self.photos[indexPath.row] ;
     //NSLog(@"Photo details are %@",photoDetails) ;
@@ -209,9 +207,14 @@
     }
     
     cell.textLabel.text=photoDetails.photoTitle ;
-    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"photoDisplay" forIndexPath:indexPath];
     return cell;
 }
+
 
 - (UIImage *) returnThumbnail:(UIImage*)image
 {
