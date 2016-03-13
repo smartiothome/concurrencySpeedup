@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "479027972.594887"
+            timestampString = "479550196.393318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "-applySepiaFilter:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "479027972.594887"
+            timestampString = "479550196.393318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
-            landmarkName = "-prepareForSegue:sender:"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "-photos"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "479027972.594887"
+            timestampString = "479550196.393318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
-            landmarkName = "-prepareForSegue:sender:"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "-photos"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotosWorthSharing/PhotoTableTableViewController.m"
-            timestampString = "479027752.874934"
+            timestampString = "479550196.393318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "-tableView:willDisplayCell:forRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>

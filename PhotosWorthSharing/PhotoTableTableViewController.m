@@ -10,6 +10,7 @@
 #import "ImageDetailViewController.h"
 #import "PhotoRecord.h"
 
+#define InducedDelay 1
 
 @interface PhotoTableTableViewController ()
 
@@ -211,6 +212,7 @@
 
 - (UIImage *) applySepiaFilter:(UIImage*)image
 {
+    sleep(InducedDelay) ;
     //let inputImage = CIImage(data:UIImagePNGRepresentation(image)!)
     CIImage *inputImage = [CIImage imageWithData:UIImagePNGRepresentation(image)] ;
     //let context = CIContext(options:nil)
