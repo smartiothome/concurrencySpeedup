@@ -11,7 +11,9 @@
 @interface PhotoTableTableViewController : UITableViewController
 
 @property (nonatomic) NSMutableArray *photos ;
-@property NSURLSessionConfiguration *defaultSessionConfig ;
-@property NSURLSession *defaultSession ;
+@property (nonatomic) NSURLSessionConfiguration *defaultSessionConfig ;
+@property (nonatomic) NSURLSession *defaultSession ;
+@property (nonatomic) NSOperationQueue *dlQueue ;
+@property (nonatomic) NSOperationQueue *imageFilteringQueue ;
 
 @end

@@ -16,6 +16,8 @@
 		C379201C1C8BDE4D00D84E9A /* PhotoTableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */; };
 		C379201F1C8C97C800D84E9A /* ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C379201E1C8C97C800D84E9A /* ImageDetailViewController.m */; };
 		C37920221C8CE4C600D84E9A /* PhotoRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = C37920211C8CE4C600D84E9A /* PhotoRecord.m */; };
+		C3F7F7921C8F359800F7F7CA /* PendingTaskTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F7F7911C8F359800F7F7CA /* PendingTaskTracker.m */; };
+		C3F7F7951C9536ED00F7F7CA /* ImageFilteringOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F7F7941C9536ED00F7F7CA /* ImageFilteringOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,10 @@
 		C379201E1C8C97C800D84E9A /* ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailViewController.m; sourceTree = "<group>"; };
 		C37920201C8CE4C600D84E9A /* PhotoRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoRecord.h; sourceTree = "<group>"; };
 		C37920211C8CE4C600D84E9A /* PhotoRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoRecord.m; sourceTree = "<group>"; };
+		C3F7F7901C8F359800F7F7CA /* PendingTaskTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingTaskTracker.h; sourceTree = "<group>"; };
+		C3F7F7911C8F359800F7F7CA /* PendingTaskTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingTaskTracker.m; sourceTree = "<group>"; };
+		C3F7F7931C9536ED00F7F7CA /* ImageFilteringOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringOperation.h; sourceTree = "<group>"; };
+		C3F7F7941C9536ED00F7F7CA /* ImageFilteringOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,10 @@
 			children = (
 				C379201A1C8BDE4D00D84E9A /* PhotoTableTableViewController.h */,
 				C379201B1C8BDE4D00D84E9A /* PhotoTableTableViewController.m */,
+				C3F7F7931C9536ED00F7F7CA /* ImageFilteringOperation.h */,
+				C3F7F7941C9536ED00F7F7CA /* ImageFilteringOperation.m */,
+				C3F7F7901C8F359800F7F7CA /* PendingTaskTracker.h */,
+				C3F7F7911C8F359800F7F7CA /* PendingTaskTracker.m */,
 				C37920201C8CE4C600D84E9A /* PhotoRecord.h */,
 				C37920211C8CE4C600D84E9A /* PhotoRecord.m */,
 				C37920001C8BDA1900D84E9A /* AppDelegate.h */,
@@ -165,7 +175,9 @@
 			files = (
 				C379200B1C8BDA1900D84E9A /* PhotosWorthSharing.xcdatamodeld in Sources */,
 				C37920221C8CE4C600D84E9A /* PhotoRecord.m in Sources */,
+				C3F7F7921C8F359800F7F7CA /* PendingTaskTracker.m in Sources */,
 				C379201F1C8C97C800D84E9A /* ImageDetailViewController.m in Sources */,
+				C3F7F7951C9536ED00F7F7CA /* ImageFilteringOperation.m in Sources */,
 				C37920021C8BDA1900D84E9A /* AppDelegate.m in Sources */,
 				C3791FFF1C8BDA1900D84E9A /* main.m in Sources */,
 				C379201C1C8BDE4D00D84E9A /* PhotoTableTableViewController.m in Sources */,
@@ -325,6 +337,7 @@
 				C37920161C8BDA1900D84E9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

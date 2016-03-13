@@ -10,6 +10,8 @@
 #import "ImageDetailViewController.h"
 #import "PhotoRecord.h"
 
+//static const int downloadTaskType=1 ;
+//static const int filteringTaskType=1 ;
 
 @interface PhotoTableTableViewController ()
 
@@ -30,6 +32,11 @@
     self.defaultSessionConfig = 	[NSURLSessionConfiguration defaultSessionConfiguration];
     self.defaultSession = [NSURLSession sessionWithConfiguration:
     self.defaultSessionConfig delegate: nil delegateQueue: [NSOperationQueue mainQueue]] ;
+    self.imageFilteringQueue = [NSOperationQueue new] ; //[[NSOperationQueue alloc] init] ;
+    self.imageFilteringQueue.name=@"Image Filtering Queue" ;
+    
+    self.dlQueue = [NSOperationQueue new] ; //[[NSOperationQueue alloc] init] ;
+    self.dlQueue.name=@"Image DL Queue" ;
     
     
     NSURL *photoPlist = [NSURL URLWithString:@"http://www.raywenderlich.com/downloads/ClassicPhotosDictionary.plist"] ;
@@ -114,8 +121,11 @@
     return [self.photos count];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"photoDisplay" forIndexPath:indexPath];
+    
     // Configure the cell...
     PhotoRecord *photoDetails=self.photos[indexPath.row] ;
     //NSLog(@"Photo details are %@",photoDetails) ;
@@ -130,11 +140,11 @@
             //cell.imageView.image=photoDetails.imageData ;
             //NSLog(@"Have already downlaoded and filtered image for URL %@/row %ld. Just supllying image %@.",imageURL,(long)indexPath.row,photoDetails.photoThumbnail) ;
         }
-//        else if(photoDetails.currState==Downloading)
-//        {
-//            //No op, since we just wait for download to complete
-//            //NSLog(@"Have staretd downloading image for URL %@/row %ld. Nothing to supply at this point and nothing to start.",imageURL,(long)indexPath.row) ;
-//        }
+        //        else if(photoDetails.currState==Downloading)
+        //        {
+        //            //No op, since we just wait for download to complete
+        //            //NSLog(@"Have staretd downloading image for URL %@/row %ld. Nothing to supply at this point and nothing to start.",imageURL,(long)indexPath.row) ;
+        //        }
         else if(photoDetails.currState==Downloaded)
         {
             cell.imageView.image=photoDetails.photoThumbnail ;
@@ -147,39 +157,49 @@
             photoDetails.currState=Downloading ;
             self.photos[indexPath.row]=photoDetails ;
             
-                NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                    if(error)
-                    {
-                        //NSLog(@"Could not retrieve image at row %ld due to error %@",(long)indexPath.row,error) ;
-                        PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
-                        photoObjToAdd.photoTitle=@"Failed to Load Photo, Downlaod error" ;
-                        photoObjToAdd.currState=Failed ;
-                        self.photos[indexPath.row]=photoObjToAdd;
-                    }
-                    else
-                    {
-                        //Convert received plist into list of objects to download
-                        //NSPropertyListSerialization.propertyListWithData
-                        //Create image object from retrieved data and apply sepia filter on it
-                        ((PhotoRecord *)self.photos[indexPath.row]).imageData=[UIImage imageWithData:data] ;
-                        //Downscale it for showing a smaller vesrion in tableview to speed things up
-                        ((PhotoRecord *)self.photos[indexPath.row]).photoThumbnail=[self returnThumbnail:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
-                        ((PhotoRecord *)self.photos[indexPath.row]).currState=Downloaded ;
-                        
-                        //Start filtering process in background
-                        
-                            ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
+            NSBlockOperation *dlBlockOperation = [NSBlockOperation blockOperationWithBlock:^{
+                    NSURLSessionDataTask *dataTask = [self.defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                        if(error)
+                        {
+                            //NSLog(@"Could not retrieve image at row %ld due to error %@",(long)indexPath.row,error) ;
+                            PhotoRecord *photoObjToAdd=[[PhotoRecord alloc] init] ;
+                            photoObjToAdd.photoTitle=@"Failed to Load Photo, Downlaod error" ;
+                            photoObjToAdd.currState=Failed ;
+                            self.photos[indexPath.row]=photoObjToAdd;
+                        }
+                        else
+                        {
+                            //Convert received plist into list of objects to download
+                            //NSPropertyListSerialization.propertyListWithData
+                            //Create image object from retrieved data and apply sepia filter on it
+                            ((PhotoRecord *)self.photos[indexPath.row]).imageData=[UIImage imageWithData:data] ;
+                            //Downscale it for showing a smaller vesrion in tableview to speed things up
                             ((PhotoRecord *)self.photos[indexPath.row]).photoThumbnail=[self returnThumbnail:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
-                            ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
+                            ((PhotoRecord *)self.photos[indexPath.row]).currState=Downloaded ;
+                            
+                            //Start filtering process in background
+                            NSBlockOperation *blockOperation = [NSBlockOperation blockOperationWithBlock:^{
+                                //This is the worker block operation
+                                ((PhotoRecord *)self.photos[indexPath.row]).imageData=[self applySepiaFilter:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
+                                 ((PhotoRecord *)self.photos[indexPath.row]).photoThumbnail=[self returnThumbnail:((PhotoRecord *)self.photos[indexPath.row]).imageData] ;
+                                 ((PhotoRecord *)self.photos[indexPath.row]).currState=Filtered ;
+                                //NSLog(@"Executed sepia filtering and thumbnialing for image %@",((PhotoRecord *)self.photos[indexPath.row]).photoTitle) ;
+                                
+                                //Display downloaded image after Sepia
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                }) ;
+                            }];
+                            [self.imageFilteringQueue addOperation:blockOperation] ;
+                            //Display downloaded image before Sepia
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
                             }) ;
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                    }) ;
-                }] ;
-                [dataTask resume] ;
+                        }
+                    }] ;
+                    [dataTask resume] ;
+            }] ;
+            [self.dlQueue addOperation:dlBlockOperation] ;
         }
     }
     else
@@ -189,11 +209,7 @@
     }
     
     cell.textLabel.text=photoDetails.photoTitle ;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"photoDisplay" forIndexPath:indexPath];
+    
     return cell;
 }
 
